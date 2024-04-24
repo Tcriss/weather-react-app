@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Weather } from "../common/types/weather.type";
-import * as weatherService from '../services/weatherService';
+import * as weatherService from '../services/weather-service';
 
 function CurrentWeather() {
     const [weather, setWeather] = useState<Weather | undefined>();
@@ -10,7 +10,7 @@ function CurrentWeather() {
     }, []);
 
     async function getWeather(): Promise<void> {
-        await weatherService.getCurrentWeather('Santo Domingo', '')
+        await weatherService.getCurrentWeather('Santo Domingo')
             .then(res => {
                 console.log('weather: ', res.data);
                 setWeather(res.data);
@@ -23,7 +23,7 @@ function CurrentWeather() {
     return (
         <section id="current-weather" className="w-full flex flex-col grow items-center justify-center gap-3">
             <div id="weather-img">
-                <img src="./assets/weather-icons/05.partial-cloudy-light.png" className="w-3/2" alt="" />
+                <img src="./assets/weather-icons/05.partial-cloudy-light.png" className="w-3/2 max-w-72" alt="" />
             </div>
             <h3 id="city-name" className="text-xl font-medium z-10">Santo Domingo</h3>
             <div id="info" className="flex gap-7 items-center">

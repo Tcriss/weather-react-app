@@ -1,14 +1,12 @@
-export interface Current {
+import { WeatherConditionI } from "./weather-condition.interface";
+
+export interface CurrentI {
     last_updated_epoch: number,
     last_updated: string,
     temp_c: number,
     temp_f: number,
     is_day: number,
-    condition: {
-        text: string,
-        icon: string,
-        code: number,
-    },
+    condition: WeatherConditionI,
     wind_mph: number,
     wind_kph: number,
     wind_degree: number,
