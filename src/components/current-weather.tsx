@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Weather } from "../common/types/weather.type";
-import * as weatherService from '../services/weather-service';
+import * as weatherService from '../services/weather.service';
 
 function CurrentWeather() {
     const [weather, setWeather] = useState<Weather | undefined>();
@@ -25,16 +25,16 @@ function CurrentWeather() {
             <div id="weather-img">
                 <img src="./assets/weather-icons/05.partial-cloudy-light.png" className="w-3/2 max-w-72" alt="" />
             </div>
-            <h3 id="city-name" className="text-xl font-medium z-10">Santo Domingo</h3>
+            <h3 id="city-name" className="text-xl font-medium">Santo Domingo</h3>
             <div id="info" className="flex gap-7 items-center">
                 <h3 id="temperature" className="text-7xl font-medium text-gray-200">27°c</h3>
                 <div id="details" className="flex flex-col gap-3">
                     <div id="wind" className="flex gap-2">
-                        <i className="fi fi-rr-wind"></i> 
+                        <i className="fi fi-br-wind"></i> 
                         <p>1.2mph</p>
                     </div>
                     <div id="humidity" className="flex gap-2">
-                        <i className="fi fi-rr-dewpoint"></i>
+                        <i className="fi fi-br-dewpoint"></i>
                         <p>90%</p>
                     </div>
                 </div>

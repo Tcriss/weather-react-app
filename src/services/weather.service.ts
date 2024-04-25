@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { Weather } from '../common/types/weather.type';
-import { ForecastI } from '../common/interfaces';
 import { ForecastResponseI } from '../common/interfaces/response.interface';
+import { SearchResultsI } from '../common/interfaces';
 
 const url: string = import.meta.env.VITE_URL;
 const key: string = import.meta.env.VITE_KEY;
@@ -25,5 +25,11 @@ export async function getForecast(city?: string): Promise<AxiosResponse<Forecast
             days: 3,
             key: key
         }
-    })
+    });
+}
+
+export async function getSearchResutls(city: string): Promise<AxiosResponse<SearchResultsI[]>> {
+    return axios.get<SearchResultsI[]>(url + 'search.json', {
+        params: { q: city, key: key }
+    });
 }

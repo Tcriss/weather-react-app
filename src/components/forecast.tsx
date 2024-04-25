@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getForecast } from "../services/weather-service";
+import { getForecast } from "../services/weather.service";
 import { ForecastI } from "../common/interfaces";
 import { forecastList } from "../common/utils/forecast.list";
 
