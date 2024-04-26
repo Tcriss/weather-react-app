@@ -8,7 +8,8 @@ function Search() {
     const [visible, setVisible] = useState<boolean>(false);
 
     async function handleSearch(city: string): Promise<void> {
-        console.log('input: ', city)
+        if (city === '') return;
+        
         await getSearchResutls(city)
             .then(res => setSearch(res.data))
             .catch(err => toast.error(err.response.data.error.message));
