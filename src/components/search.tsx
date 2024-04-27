@@ -1,18 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getSearchResutls } from '../services/weather.service';
 import { SearchResultsI } from "../common/interfaces";
+import * as favoriteService from "../services/favorites.service";
+import Card from "./card";
 import toast from "react-hot-toast";
 
 function Search() {
     const [search, setSearch] = useState<SearchResultsI[]>([]);
-    const [visible, setVisible] = useState<boolean>(false);
+    const [favorites, setFavorites] = useState<SearchResultsI[]>([]);
+
+    useEffect(() => {
+        getFavorites();
+    }, []);
 
     async function handleSearch(city: string): Promise<void> {
         if (city === '') return;
-        
+
         await getSearchResutls(city)
             .then(res => setSearch(res.data))
             .catch(err => toast.error(err.response.data.error.message));
+    }
+
+    async function getFavorites(): Promise<void> {
+        const favs: SearchResultsI[] = await favoriteService.find();
+
+        setFavorites(favs);
+    }
+
+    async function addFavorite(city: SearchResultsI): Promise<void> {
+        await favoriteService.add(city);
+    }
+
+    async function removeFavorite(city: SearchResultsI): Promise<void> {
+        await favoriteService.remove(city.id);
+    }
+
+    async function isFavorite(city: SearchResultsI): Promise<boolean> {
+        getFavorites();
+        const match = favorites.find(favorite => favorite.id === city.id);
+
+        return match ? true : false;
     }
 
     return (
@@ -29,20 +56,13 @@ function Search() {
                         {
                             search.map((res, index) => {
                                 return (
-                                    <div key={index} id="result" className="w-full flex justify-between bg-white rounded-lg shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px] text-black px-2 py-2">
-                                        <div id="city">
-                                            <p className="font-semibold">{res.name}</p>
-                                            <div id="extra-info" className="flex gap-2">
-                                                <p className="text-slate-400 text-sm">{res.region}</p>
-                                                <p className="text-slate-400 text-sm">{res.country}</p>
-                                            </div>
-                                        </div>
-                                        <div id="actions" className="w-7 h-full flex justify-center items-center">
-                                            <button id="add-favorite-btn" className="w-full h-7 flex rounded-full justify-center items-center transition-all hover:bg-yellow-500 hover:scale-105 active:scale-95 hover:text-white active:shadow-lg">
-                                                <i className="fi fi-br-star flex justify-center items-center"></i>
-                                            </button>
-                                        </div>
-                                    </div>
+                                    <Card
+                                        key={index}
+                                        city={res}
+                                        isFavorite={isFavorite}
+                                        add={addFavorite}
+                                        remove={removeFavorite}
+                                    />
                                 )
                             })
                         }
