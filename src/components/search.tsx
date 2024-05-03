@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { motion, AnimatePresence } from 'framer-motion';
 import { getSearchResutls } from '../services/weather.service';
 import { SearchResultsI } from "../common/interfaces";
 import * as favoriteService from "../services/favorites.service";
 import { changeCurrentCity } from "../services/weather.service";
 import Card from "./card";
-import toast from "react-hot-toast";
 
 function Search() {
     const [search, setSearch] = useState<SearchResultsI[]>([]);
@@ -51,25 +52,31 @@ function Search() {
                     <i className="fi fi-br-search flex justify-center items-center"></i>
                 </div>
             </div>
-            {
-                search.length > 0 && (
-                    <div id="results" className="inset-y-20 w-96 z-10 fixed shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] backdrop-blur-xl rounded-xl px-4 py-4 bg-slate-200/80 flex flex-col gap-3 max-h-96 overflow-y-scroll">
-                        {
-                            search.map((res, index) => {
-                                return (
-                                    <Card
-                                        key={index}
-                                        city={res}
-                                        isFavorite={isFavorite}
-                                        add={addFavorite}
-                                        remove={removeFavorite}
-                                    />
-                                )
-                            })
-                        }
-                    </div>
-                )
-            }
+            <AnimatePresence>
+                {
+                    search.length > 0 && (
+                        <motion.div
+                            initial={{ opacity: 0, translateY: -30 }}
+                            animate={{ opacity: 1, translateY: 0 }}
+                            exit={{ opacity: 0, translateY: -30 }}
+                            id="results" className="inset-y-20 w-96 z-10 fixed shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] backdrop-blur-xl rounded-xl px-4 py-4 bg-slate-200/80 flex flex-col gap-3 max-h-96 overflow-y-scroll">
+                            {
+                                search.map((res, index) => {
+                                    return (
+                                        <Card
+                                            key={index}
+                                            city={res}
+                                            isFavorite={isFavorite}
+                                            add={addFavorite}
+                                            remove={removeFavorite}
+                                        />
+                                    )
+                                })
+                            }
+                        </motion.div>
+                    )
+                }
+            </AnimatePresence>
         </section>
     )
 }
