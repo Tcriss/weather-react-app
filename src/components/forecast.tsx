@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
 import { getForecast } from "../services/weather.service";
 import { ForecastI } from "../common/interfaces";
-import { forecastList } from "../common/utils/forecast.list";
+import toast from "react-hot-toast";
 
 function Forecast() {
     const [forecast, setForecast] = useState<ForecastI[] | undefined>();
 
     useEffect(() => {
-        setForecast(forecastList);
-        //getWeatherForecast();
-    }, []);
+        getWeatherForecast();
+    }, [forecast]);
 
     async function getWeatherForecast(): Promise<void> {
         await getForecast()
             .then(res => setForecast(res.data.forecast.forecastday))
             .catch(err => {
-                console.log(err.message);
+                toast.error(err)
             });
     }
 
@@ -24,16 +23,25 @@ function Forecast() {
             {
                 forecast ? forecast.map((fc, index) => {
                     return (
-                        <div key={index} id="card" className="rounded-xl shadow-xl flex flex-col items-center gap-2 px-3 py-3 text-white bg-white bg-opacity-15">
+                        <div key={index} id="card" className="w-36 rounded-xl shadow-xl flex flex-col items-center gap-2 px-3 py-3 text-white bg-white bg-opacity-15">
                             <p id="day" className="uppercase">{fc.date}</p>
                             <div id="icon">
                                 <img className="w-16" src="./assets/weather-icons/01.sun-light.png" />
                             </div>
                             <p id="temperature" className="text-2xl font-semibold">{fc.day.maxtemp_c + '/' + fc.day.mintemp_c}</p>
-                            <p id="condition" className="text-xs font-semibold uppercase text-opacity-5">{fc.day.condition.text}</p>
+                            <p id="condition" className="text-xs font-semibold uppercase text-opacity-5 text-ellipsis overflow-hidden whitespace-nowrap">{fc.day.condition.text}</p>
                         </div>
                     )
-                }) : (<p>Loading...</p>)
+                }) : (
+                    <div id="card" className="animate-pulse w-36 rounded-xl shadow-xl flex flex-col items-center gap-2 px-3 py-3 text-white bg-white bg-opacity-15">
+                        <div className="w-full h-6 rounded-lg bg-slate-300/40"></div>
+                        <div id="icon">
+                            <img className="w-16" src="./assets/weather-icons/01.sun-light.png" />
+                        </div>
+                        <div className="w-full h-8 rounded-lg bg-slate-300/40"></div>
+                        <div className="w-full h-4 rounded-lg bg-slate-300/40"></div>
+                    </div>
+                )
             }
         </section>
     )

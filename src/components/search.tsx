@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getSearchResutls } from '../services/weather.service';
 import { SearchResultsI } from "../common/interfaces";
 import * as favoriteService from "../services/favorites.service";
+import { changeCurrentCity } from "../services/weather.service";
 import Card from "./card";
 import toast from "react-hot-toast";
 
@@ -43,8 +44,8 @@ function Search() {
     }
 
     return (
-        <section id="search" className="relative w-full h-22 flex flex-col gap-3 justify-center items-center py-4">
-            <div className="relative w-96">
+        <section id="search" className="relative w-96 h-22 flex flex-col gap-3 justify-center items-center py-4">
+            <div className="relative w-full">
                 <input type="text" onChange={(e) => handleSearch(e.target.value)} id="simple-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5" placeholder="Search city name..." required />
                 <div id="input-icon" className="absolute flex justify-center items-center inset-y-1 inset-x-1 w-8 h-8 text-sm font-medium text-black rounded-lg">
                     <i className="fi fi-br-search flex justify-center items-center"></i>

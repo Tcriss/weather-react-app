@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { SearchResultsI } from "../common/interfaces";
+import { changeCurrentCity } from "../services/weather.service";
 
 interface CardProps {
     city: SearchResultsI,
     isFavorite: Function,
-    //favorites: SearchResultsI[],
     add: Function, 
     remove: Function 
 }
@@ -31,9 +31,13 @@ function Card({ city, isFavorite, add, remove }: CardProps) {
         setIsFav(await isFavorite(city));
     };
 
+    async function changeCity(latLong: string): Promise<void> {
+        await changeCurrentCity(latLong);
+    }
+
     return (
-        <div id="result" className="w-full flex justify-between bg-white rounded-lg shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px] text-black px-2 py-2">
-            <div id="city">
+        <article id="result" className="cursor-pointer w-full flex justify-between bg-white rounded-lg shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px] text-black px-2 py-2 active:scale-95">
+            <div id="city" onClick={() => changeCity(`${city.lat},${city.lon}`)}>
                 <p className="font-semibold">{city.name}</p>
                 <div id="extra-info" className="flex gap-2">
                     <p className="text-slate-400 text-sm">{city.region}</p>
@@ -45,7 +49,7 @@ function Card({ city, isFavorite, add, remove }: CardProps) {
                     <i className={`fi ${ isFav ? 'fi-sr-star' : 'fi-br-star' } flex justify-center items-center`}></i>
                 </button>
             </div>
-        </div>
+        </article>
     )
 }
 
