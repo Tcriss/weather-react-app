@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { Weather } from '../common/types/weather.type';
 import { ForecastResponseI } from '../common/interfaces/response.interface';
-import { SearchResultsI } from '../common/interfaces';
+import { SearchResultsI, SettingsI } from '../common/interfaces';
 import toast from 'react-hot-toast';
 
 const url: string = import.meta.env.VITE_URL;
@@ -50,4 +50,15 @@ export async function changeCurrentCity(city: string): Promise<void> {
     getCurrentWeather();
 
     toast.success(`Current city changed`);
+}
+
+export async function getSettings(): Promise<SettingsI> {
+    const items: string | null = localStorage.getItem('settings');
+
+    return items ? JSON.parse(items) : null;
+}
+
+export async function setSettings(settings: SettingsI): Promise<void> {
+    localStorage.setItem('settings', JSON.stringify(settings));
+    toast.success('Settings updated succesfully');
 }

@@ -15,7 +15,7 @@ function Card({ city, isFavorite, add, remove }: CardProps) {
 
     useEffect(() => {
         check();
-    }, []);
+    }, [isFav]);
 
     async function handleClick(): Promise<void> {
         const math: boolean = await isFavorite(city);

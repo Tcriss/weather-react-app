@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
-import { getCurrentWeather } from '../services/weather.service';
+import { getCurrentWeather, getSettings } from '../services/weather.service';
 import { Weather } from '../common/types/weather.type';
 import toast from 'react-hot-toast';
+import { SettingsI } from '../common/interfaces';
+import { MeasureUnits, Units } from '../common/enums';
 
 function CurrentWeather() {
     const [weather, setWeather] = useState<Partial<Weather>>({});
+    const [settings, setSettings] = useState<SettingsI>({ unit: Units.C, measureUnit: MeasureUnits.K });
 
     useEffect(() => {
         update();
-    }, [weather]);
+    }, [weather, settings]);
 
     async function update(): Promise<void> {
+        setSettings(await getSettings());
         await getCurrentWeather()
             .then(res => setWeather(res.data))
             .catch(err => toast.error(err))
@@ -23,11 +27,11 @@ function CurrentWeather() {
             </div>
             <h3 id="city-name" className="text-xl font-medium">{weather.location?.name}</h3>
             <div id="info" className="flex gap-7 items-center">
-                <h3 id="temperature" className="text-7xl font-medium text-gray-200">{weather.current?.temp_c}°c</h3>
+                <h3 id="temperature" className="text-7xl font-medium text-gray-200">{ settings.unit === Units.C ? weather.current?.temp_c + '°c' : weather.current?.temp_f + '°f'}</h3>
                 <div id="details" className="flex flex-col gap-3">
                     <div id="wind" className="flex gap-2">
                         <i className="fi fi-br-wind"></i>
-                        <p>{weather.current?.wind_kph}kph</p>
+                        <p>{ settings.measureUnit === MeasureUnits.K ? weather.current?.wind_kph + 'kph' : weather.current?.wind_mph + 'mph'}</p>
                     </div>
                     <div id="humidity" className="flex gap-2">
                         <i className="fi fi-br-dewpoint"></i>

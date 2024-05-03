@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
-import { getForecast } from "../services/weather.service";
-import { ForecastI } from "../common/interfaces";
+import { getForecast, getSettings } from "../services/weather.service";
+import { ForecastI, SettingsI } from "../common/interfaces";
 import toast from "react-hot-toast";
+import { MeasureUnits, Units } from "../common/enums";
 
 function Forecast() {
     const [forecast, setForecast] = useState<ForecastI[] | undefined>();
+    const [settings, setSettings] = useState<SettingsI>({ unit: Units.C, measureUnit: MeasureUnits.K });
 
     useEffect(() => {
         getWeatherForecast();
-    }, [forecast]);
+    }, [forecast, settings]);
 
     async function getWeatherForecast(): Promise<void> {
+        setSettings(await getSettings());
         await getForecast()
             .then(res => setForecast(res.data.forecast.forecastday))
             .catch(err => {
@@ -28,7 +31,7 @@ function Forecast() {
                             <div id="icon">
                                 <img className="w-16" src="./assets/weather-icons/01.sun-light.png" />
                             </div>
-                            <p id="temperature" className="text-2xl font-semibold">{fc.day.maxtemp_c + '/' + fc.day.mintemp_c}</p>
+                            <p id="temperature" className="text-2xl font-normal">{ settings.unit === Units.C ? fc.day.maxtemp_c + '/' + fc.day.mintemp_c : fc.day.maxtemp_f + '/' + fc.day.mintemp_f }</p>
                             <p id="condition" className="text-xs font-semibold uppercase text-opacity-5 text-ellipsis overflow-hidden whitespace-nowrap">{fc.day.condition.text}</p>
                         </div>
                     )

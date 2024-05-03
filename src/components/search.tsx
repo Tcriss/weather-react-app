@@ -55,11 +55,12 @@ function Search() {
             <AnimatePresence>
                 {
                     search.length > 0 && (
-                        <motion.div
+                        <motion.div id="results"
                             initial={{ opacity: 0, translateY: -30 }}
                             animate={{ opacity: 1, translateY: 0 }}
                             exit={{ opacity: 0, translateY: -30 }}
-                            id="results" className="inset-y-20 w-96 z-10 fixed shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] backdrop-blur-xl rounded-xl px-4 py-4 bg-slate-200/80 flex flex-col gap-3 max-h-96 overflow-y-scroll">
+                            className="inset-y-20 w-96 z-10 fixed shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] backdrop-blur-xl rounded-xl px-4 py-4 bg-slate-200/80 flex flex-col gap-3 max-h-96 overflow-y-scroll"
+                        >
                             {
                                 search.map((res, index) => {
                                     return (
