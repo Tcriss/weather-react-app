@@ -3,6 +3,7 @@ import { Weather } from '../common/types/weather.type';
 import { ForecastResponseI } from '../common/interfaces/response.interface';
 import { SearchResultsI, SettingsI } from '../common/interfaces';
 import toast from 'react-hot-toast';
+import { MeasureUnits, Units } from '../common/enums';
 
 const url: string = import.meta.env.VITE_URL;
 const key: string = import.meta.env.VITE_KEY;
@@ -54,8 +55,9 @@ export async function changeCurrentCity(city: string): Promise<void> {
 
 export async function getSettings(): Promise<SettingsI> {
     const items: string | null = localStorage.getItem('settings');
+    const defaultSetting: SettingsI = { unit: Units.C, measureUnit: MeasureUnits.K };
 
-    return items ? JSON.parse(items) : null;
+    return items ? JSON.parse(items) : await setSettings(defaultSetting);
 }
 
 export async function setSettings(settings: SettingsI): Promise<void> {

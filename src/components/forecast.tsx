@@ -10,7 +10,7 @@ function Forecast() {
 
     useEffect(() => {
         getWeatherForecast();
-    }, [forecast, settings]);
+    }, []);
 
     async function getWeatherForecast(): Promise<void> {
         setSettings(await getSettings());
@@ -31,7 +31,7 @@ function Forecast() {
                             <div id="icon">
                                 <img className="w-16" src="./assets/weather-icons/01.sun-light.png" />
                             </div>
-                            <p id="temperature" className="text-2xl font-normal">{ settings.unit === Units.C ? fc.day.maxtemp_c + '/' + fc.day.mintemp_c : fc.day.maxtemp_f + '/' + fc.day.mintemp_f }</p>
+                            <p id="temperature" className="text-xl font-normal">{ settings.unit === Units.C ? fc.day.maxtemp_c + '/' + fc.day.mintemp_c + ' °C' : fc.day.maxtemp_f + '/' + fc.day.mintemp_f + ' °F' }</p>
                             <p id="condition" className="text-xs font-semibold uppercase text-opacity-5 text-ellipsis overflow-hidden whitespace-nowrap">{fc.day.condition.text}</p>
                         </div>
                     )

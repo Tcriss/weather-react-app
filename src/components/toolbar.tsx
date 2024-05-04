@@ -1,6 +1,7 @@
 import Search from "./search";
-import Favorites from "./favorites";
-import Settings from "./settings";
+import FavoritesMenu from "./favorites-menu";
+import Toggle from "./toggle";
+import SettingsMenu from "./settings-menu";
 
 function Toolbar() {
 
@@ -11,8 +12,12 @@ function Toolbar() {
                 <Search/>
             </div>
             <div className="flex gap-3">
-                <Favorites/>
-                <Settings/>
+                <Toggle icon={'fi-br-star'}>
+                    <FavoritesMenu></FavoritesMenu>
+                </Toggle>
+                <Toggle icon={'fi-br-settings'}>
+                    <SettingsMenu></SettingsMenu>
+                </Toggle>
             </div>
         </div>
     )

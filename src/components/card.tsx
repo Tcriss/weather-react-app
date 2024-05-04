@@ -1,34 +1,19 @@
-import { useEffect, useState } from "react";
 import { SearchResultsI } from "../common/interfaces";
 import { changeCurrentCity } from "../services/weather.service";
 
 interface CardProps {
     city: SearchResultsI,
-    isFavorite: Function,
+    isFav: boolean,
     add: Function, 
     remove: Function 
 }
 
-function Card({ city, isFavorite, add, remove }: CardProps) {
-    const [isFav, setIsFav] = useState<boolean>(false)
+function Card({ city, isFav, add, remove }: CardProps) {
     const active: string = 'bg-yellow-400 text-slate-100';
 
-    useEffect(() => {
-        check();
-    }, [isFav]);
-
     async function handleClick(): Promise<void> {
-        const math: boolean = await isFavorite(city);
-
-        if (math === true) remove(city);
-        if (math === false) add(city);
-            
-        console.log('status: ', await isFavorite(city));
-        setIsFav(await isFavorite(city));
-    };
-
-    async function check(): Promise<void> {
-        setIsFav(await isFavorite(city));
+        if (isFav === true) remove(city);
+        if (isFav === false) add(city);
     };
 
     async function changeCity(latLong: string): Promise<void> {
@@ -36,12 +21,12 @@ function Card({ city, isFavorite, add, remove }: CardProps) {
     }
 
     return (
-        <article id="result" className="cursor-pointer w-full flex justify-between bg-white rounded-lg shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px] text-black px-2 py-2 active:scale-95">
-            <div id="city" onClick={() => changeCity(`${city.lat},${city.lon}`)}>
+        <article id="result" className="cursor-pointer w-full flex justify-between bg-white rounded-lg shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px] text-black px-2 py-2">
+            <div id="city" onClick={() => changeCity(`${city.lat},${city.lon}`)} className="grow max-w-72">
                 <p className="font-semibold">{city.name}</p>
                 <div id="extra-info" className="flex gap-2">
-                    <p className="text-slate-400 text-sm">{city.region}</p>
-                    <p className="text-slate-400 text-sm">{city.country}</p>
+                    <p className="text-slate-400 text-sm text-ellipsis overflow-hidden text-nowrap">{city.region}</p>
+                    <p className="text-slate-400 text-sm text-ellipsis overflow-hidden text-nowrap">{city.country}</p>
                 </div>
             </div>
             <div id="actions" className="w-7 h-full flex justify-center items-center">

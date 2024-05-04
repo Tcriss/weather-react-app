@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { getSearchResutls } from '../services/weather.service';
 import { SearchResultsI } from "../common/interfaces";
 import * as favoriteService from "../services/favorites.service";
-import { changeCurrentCity } from "../services/weather.service";
 import Card from "./card";
 
 function Search() {
@@ -31,14 +30,15 @@ function Search() {
 
     async function addFavorite(city: SearchResultsI): Promise<void> {
         await favoriteService.add(city);
+        getFavorites();
     }
 
     async function removeFavorite(city: SearchResultsI): Promise<void> {
         await favoriteService.remove(city.id);
+        getFavorites();
     }
 
-    async function isFavorite(city: SearchResultsI): Promise<boolean> {
-        getFavorites();
+    function isFavorite(city: SearchResultsI): boolean {
         const match = favorites.find(favorite => favorite.id === city.id);
 
         return match ? true : false;
@@ -67,7 +67,7 @@ function Search() {
                                         <Card
                                             key={index}
                                             city={res}
-                                            isFavorite={isFavorite}
+                                            isFav={isFavorite(res)}
                                             add={addFavorite}
                                             remove={removeFavorite}
                                         />
