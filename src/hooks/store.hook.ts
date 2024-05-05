@@ -1,20 +1,10 @@
 import { create } from 'zustand';
+
 import { Weather } from '../common/types/weather.type';
-import { ForecastI, SettingsI } from '../common/interfaces';
+import { ForecastI, SettingsI, WeatherStoreI } from '../common/interfaces';
 import { MeasureUnits, Units } from '../common/enums';
 
-interface WeatherStore {
-    background: string,
-    weather: Partial<Weather>,
-    forecast: ForecastI[],
-    settings: SettingsI,
-    setBackground: (background: string) => void,
-    setWeather: (weather: Weather) => void,
-    setForecast: (forecast: ForecastI[]) => void,
-    setSettings: (settings: SettingsI) => void
-}
-
-const useStore = create<WeatherStore>(set => ({
+const useStore = create<WeatherStoreI>(set => ({
     background: 'bg-blue-400',
     weather: {},
     forecast: [],

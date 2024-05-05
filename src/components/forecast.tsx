@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { ForecastI, SettingsI, WeatherCodeI } from "../common/interfaces";
-import { MeasureUnits, Units } from "../common/enums";
-import { weatherCodes } from "../common/utils/codes.list";
 import useStore from "../hooks/store.hook";
+import { ForecastI, SettingsI, WeatherCodeI } from "../common/interfaces";
+import { weatherCodes } from "../common/utils/codes.list";
+import { Units } from "../common/enums";
 
 function Forecast() {
     const forecast: ForecastI[] = useStore(state => state.forecast);
-    const [settings, setSettings] = useState<SettingsI>({ unit: Units.C, measureUnit: MeasureUnits.K });
+    const settings: SettingsI = useStore(state => state.settings);
     const skeletons: unknown[] = Array(3).fill(null);
 
     function updateIcon(forecast: ForecastI): string {

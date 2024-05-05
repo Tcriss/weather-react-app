@@ -1,19 +1,19 @@
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
+
+import useStore from "../hooks/store.hook";
 import { MeasureUnits, Units } from "../common/enums";
 import { SettingsI } from "../common/interfaces";
-import useStore from "../hooks/store.hook";
+import { setSettings } from "../services/weather.service";
 
 function SettingsMenu() {
     const settings: SettingsI = useStore(state => state.settings);
     const updateSettings = useStore(state => state.setSettings);
+    const { register, handleSubmit } = useForm<SettingsI>();
 
-    function saveSettings(event: React.FormEvent): void {
-        event.preventDefault();
-        console.log(event)
-        // updateSettings({
-        //     unit: unit,
-        //     measureUnit: measureUnit
-        // });
+    function saveSettings(form: SettingsI): void {
+        setSettings(form);
+        updateSettings(form);
     };
 
     return (
@@ -26,7 +26,7 @@ function SettingsMenu() {
             <header className="w-full flex justify-between items-center h-8">
                 <h3 className="text-black/65 text-lg font-bold">Settings</h3>
             </header>
-            <form onSubmit={saveSettings} className="w-full flex flex-col gap-3 grow overflow-y-scroll">
+            <form onSubmit={handleSubmit(saveSettings)} className="w-full flex flex-col gap-3 grow overflow-y-scroll">
                 <article id="setting" className="w-full flex gap-3 bg-white rounded-lg shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px] text-black px-2 py-2">
                     <div id="toggle" className="w-8 h-8 flex items-center gap-2 rounded-full justify-center bg-slate-50/25">
                         <i className="fi fi-br-temperature-high flex justify-center items-center"></i>
@@ -34,9 +34,9 @@ function SettingsMenu() {
                     <div id="extra-info" className="flex flex-col grow gap-2">
                         <label htmlFor="temperature" className="block text-sm font-medium leading-6 text-gray-900">Temperature</label>
                         <div className="mt-2 w-full">
-                            <select id="temperature" value={settings.unit} name="temperature" autoComplete="country-name" className="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                                <option>{Units.F}</option>
-                                <option>{Units.C}</option>
+                            <select id="temperature" {...register('unit')}  autoComplete="country-name" className="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                <option value={Units.F}>{Units.F}</option>
+                                <option value={Units.C}>{Units.C}</option>
                             </select>
                         </div>
                     </div>
@@ -48,9 +48,9 @@ function SettingsMenu() {
                     <div id="extra-info" className="flex flex-col grow gap-2">
                         <label htmlFor="unity" className="block text-sm font-medium leading-6 text-gray-900">Measure unit</label>
                         <div className="w-full">
-                            <select id="unity" value={settings.measureUnit} name="unity" autoComplete="country-name" className="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                                <option>{MeasureUnits.M}</option>
-                                <option>{MeasureUnits.K}</option>
+                            <select id="unity" {...register('measureUnit')}  className="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                <option value={MeasureUnits.M}>{MeasureUnits.M}</option>
+                                <option value={MeasureUnits.K}>{MeasureUnits.K}</option>
                             </select>
                         </div>
                     </div>

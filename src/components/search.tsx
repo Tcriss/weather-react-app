@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
+
+import Card from "./card";
 import { motion, AnimatePresence } from 'framer-motion';
 import { getSearchResutls } from '../services/weather.service';
 import { SearchResultsI } from "../common/interfaces";
 import * as favoriteService from "../services/favorites.service";
-import Card from "./card";
 
 function Search() {
     const [search, setSearch] = useState<SearchResultsI[]>([]);

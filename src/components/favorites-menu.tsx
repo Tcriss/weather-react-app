@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+
+import Card from './card';
 import { SearchResultsI } from '../common/interfaces';
 import * as favoriteService from '../services/favorites.service';
-import Card from './card';
 
 function FavoritesMenu() {
     const [favorites, setFavorites] = useState<SearchResultsI[]>([]);

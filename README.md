@@ -1,30 +1,35 @@
-# React + TypeScript + Vite
+# React Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple but elegant weather web api made in react + typescript.
 
-Currently, two official plugins are available:
+### Screenshots
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+#### Home
+![Home](public/assets/previews/home-page.png)
+#### Search cities
+![Search](public/assets/previews/search-results.png)
+#### Favorites menu
+![Favorites menu](public/assets/previews/favorites-menu.png)
+#### Settings menu
+![Settings menu](public/assets/previews/setting.png)
+![Changing some settings](public/assets/previews/settings-f.png)
 
-## Expanding the ESLint configuration
+### Stack used
+This app uses Vite + SWC. A minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+The weather services are provided by [Free Weather Api](https://www.weatherapi.com/).
 
-- Configure the top-level `parserOptions` property like this:
+### Dependencies
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- Axios
+- Framer Motion
+- Free Weather Api
+- TailwindCSS
+- Vite
+- React Hook Form
+- React Hot Toast
+- Zustand
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Assets
+
+Icons used in the app: [Weather Icons - Community by Neelesh Chaudhary](https://www.figma.com/community/file/971051749541378755/weather-icons-community?searchSessionId=lvu0htux-009taqkvyu4zn).

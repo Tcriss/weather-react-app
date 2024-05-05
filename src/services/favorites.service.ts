@@ -1,4 +1,5 @@
 import toast from "react-hot-toast";
+
 import { SearchResultsI } from "../common/interfaces";
 
 export async function find(): Promise<SearchResultsI[]> {

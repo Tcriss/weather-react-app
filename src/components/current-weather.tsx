@@ -1,12 +1,11 @@
-import { useState } from 'react';
+import useStore from '../hooks/store.hook';
 import { Weather } from '../common/types/weather.type';
 import { CurrentI, SettingsI, WeatherCodeI } from '../common/interfaces';
 import { MeasureUnits, Units } from '../common/enums';
 import { weatherCodes } from '../common/utils/codes.list';
-import useStore from '../hooks/store.hook';
 
 function CurrentWeather() {
-    const [settings, setSettings] = useState<SettingsI>({ unit: Units.C, measureUnit: MeasureUnits.K });
+    const settings: SettingsI = useStore(state => state.settings);
     const weather: Partial<Weather> = useStore(state => state.weather);
 
     function updateIcon(currentWeather: CurrentI): string {

@@ -2,7 +2,8 @@
 export default {
   content: [
     './src/pages/**/*.tsx',
-    './src/components/**/*.tsx'
+    './src/components/**/*.tsx',
+    './src/common/utils/codes.list.ts'
   ],
   theme: {
     extend: {},
@@ -10,6 +11,6 @@ export default {
       poppins: ['Poppins']
     }
   },
-  plugins: [],
+  plugins: []
 }
 

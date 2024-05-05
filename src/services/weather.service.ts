@@ -1,8 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
+import toast from 'react-hot-toast';
+
 import { Weather } from '../common/types/weather.type';
 import { ForecastResponseI } from '../common/interfaces/response.interface';
 import { SearchResultsI, SettingsI } from '../common/interfaces';
-import toast from 'react-hot-toast';
 import { MeasureUnits, Units } from '../common/enums';
 
 const url: string = import.meta.env.VITE_URL;

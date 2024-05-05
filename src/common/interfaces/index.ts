@@ -8,3 +8,4 @@ export type { ForecastI } from './forecast.interface';
 export type { SearchResultsI } from './search-results.interface';
 export type { SettingsI } from './settings.interface';
 export type { WeatherCodeI } from './weather-code.interface';
+export type { WeatherStoreI } from './weather-store.interface';

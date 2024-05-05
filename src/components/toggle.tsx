@@ -7,7 +7,9 @@ function Toggle({ children, icon }: { children: ReactNode, icon: string }) {
 
     useEffect(() => {
         function close(event: any): void {
-            if (!menuRef.current.contains(event.target)) setOpen(false);
+            if (event.current !== null) {
+                if (!menuRef.current.contains(event.target)) setOpen(false);
+            }
         }
 
         document.addEventListener('mousedown', close);
