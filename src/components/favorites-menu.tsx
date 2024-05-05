@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SearchResultsI } from '../common/interfaces';
 import * as favoriteService from '../services/favorites.service';
 import Card from './card';

@@ -1,27 +1,19 @@
 import { motion } from "framer-motion"
-import { useEffect, useState } from "react";
 import { MeasureUnits, Units } from "../common/enums";
 import { SettingsI } from "../common/interfaces";
-import { getSettings, setSettings } from "../services/weather.service";
+import useStore from "../hooks/store.hook";
 
 function SettingsMenu() {
-    const [value, setValue] = useState<SettingsI>({
-        unit: Units.C,
-        measureUnit: MeasureUnits.K
-    });
+    const settings: SettingsI = useStore(state => state.settings);
+    const updateSettings = useStore(state => state.setSettings);
 
-    useEffect(() => {
-        getCurrentSettings();
-    }, []);
-
-    async function getCurrentSettings(): Promise<void> {
-        const values = await getSettings();
-        setValue(values)
-    };
-
-    async function saveSettings(): Promise<void> {
-        console.log('value: ', value)
-        await setSettings(value);
+    function saveSettings(event: React.FormEvent): void {
+        event.preventDefault();
+        console.log(event)
+        // updateSettings({
+        //     unit: unit,
+        //     measureUnit: measureUnit
+        // });
     };
 
     return (
@@ -33,9 +25,8 @@ function SettingsMenu() {
         >
             <header className="w-full flex justify-between items-center h-8">
                 <h3 className="text-black/65 text-lg font-bold">Settings</h3>
-                <button onClick={saveSettings} id="save" className="rounded-lg bg-blue-400 w-32 h-full hover:bg-blue-500 transition-all">Save settings</button>
             </header>
-            <div className="w-full flex flex-col gap-3 grow overflow-y-scroll">
+            <form onSubmit={saveSettings} className="w-full flex flex-col gap-3 grow overflow-y-scroll">
                 <article id="setting" className="w-full flex gap-3 bg-white rounded-lg shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px] text-black px-2 py-2">
                     <div id="toggle" className="w-8 h-8 flex items-center gap-2 rounded-full justify-center bg-slate-50/25">
                         <i className="fi fi-br-temperature-high flex justify-center items-center"></i>
@@ -43,7 +34,7 @@ function SettingsMenu() {
                     <div id="extra-info" className="flex flex-col grow gap-2">
                         <label htmlFor="temperature" className="block text-sm font-medium leading-6 text-gray-900">Temperature</label>
                         <div className="mt-2 w-full">
-                            <select id="temperature" value={value.unit} onChange={(e) => { setValue(v => ({ ...v, unit: e.target.value as Units })) }} name="temperature" autoComplete="country-name" className="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                            <select id="temperature" value={settings.unit} name="temperature" autoComplete="country-name" className="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
                                 <option>{Units.F}</option>
                                 <option>{Units.C}</option>
                             </select>
@@ -57,14 +48,15 @@ function SettingsMenu() {
                     <div id="extra-info" className="flex flex-col grow gap-2">
                         <label htmlFor="unity" className="block text-sm font-medium leading-6 text-gray-900">Measure unit</label>
                         <div className="w-full">
-                            <select id="unity" value={value.measureUnit} onChange={(e) => { setValue(v => ({ ...v, measureUnit: e.target.value as MeasureUnits })) }} name="unity" autoComplete="country-name" className="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                            <select id="unity" value={settings.measureUnit} name="unity" autoComplete="country-name" className="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
                                 <option>{MeasureUnits.M}</option>
                                 <option>{MeasureUnits.K}</option>
                             </select>
                         </div>
                     </div>
                 </article>
-            </div>
+                <button id="save" className="rounded-lg bg-blue-400 w-full h-12 hover:bg-blue-500 transition-all">Save settings</button>
+            </form>
             <footer id="credits" className="w-full grid gap-2 ">
                 <div id="author" className="text-black/65 text-sm uppercase text-center">
                     Made by Tcriss, <a href="https://github.com/Tcriss/weather-react-app" className="font-bold" target="_blank">source code</a>

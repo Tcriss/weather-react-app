@@ -11,7 +11,7 @@ const key: string = import.meta.env.VITE_KEY;
 export async function getCurrentWeather(): Promise<AxiosResponse<Weather>> {
     const city: string = await getCurrentCity();
 
-    return await axios.get<Weather>(url + 'current.json', {
+    return axios.get<Weather>(url + 'current.json', {
         headers: { 'accept': 'application/json' },
         params: {
             q: city || 'santo domingo',

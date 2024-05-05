@@ -1,3 +1,3 @@
 import { CurrentI, LocationI } from "../interfaces";
 
-export type Weather = { current: CurrentI, location: LocationI }
+export type Weather = { location: LocationI, current: CurrentI }

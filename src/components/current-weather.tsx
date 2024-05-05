@@ -1,29 +1,23 @@
-import { useEffect, useState } from 'react';
-import { getCurrentWeather, getSettings } from '../services/weather.service';
+import { useState } from 'react';
 import { Weather } from '../common/types/weather.type';
-import toast from 'react-hot-toast';
-import { SettingsI } from '../common/interfaces';
+import { CurrentI, SettingsI, WeatherCodeI } from '../common/interfaces';
 import { MeasureUnits, Units } from '../common/enums';
+import { weatherCodes } from '../common/utils/codes.list';
+import useStore from '../hooks/store.hook';
 
 function CurrentWeather() {
-    const [weather, setWeather] = useState<Partial<Weather>>({});
     const [settings, setSettings] = useState<SettingsI>({ unit: Units.C, measureUnit: MeasureUnits.K });
+    const weather: Partial<Weather> = useStore(state => state.weather);
 
-    useEffect(() => {
-        update();
-    }, []);
-
-    async function update(): Promise<void> {
-        setSettings(await getSettings());
-        getCurrentWeather()
-            .then(res => setWeather(res.data))
-            .catch(err => toast.error(err))
-    };
+    function updateIcon(currentWeather: CurrentI): string {
+        const condition: WeatherCodeI | undefined = weatherCodes.find(code => currentWeather.condition.code === code?.code);
+        return condition ? condition.icon : './assets/weather-icons/sun-light.png';
+    }
 
     return weather.current && weather.location ? (
         <section id="current-weather" className="w-full flex flex-col grow items-center justify-center gap-3">
             <div id="weather-img">
-                <img src="./assets/weather-icons/05.partial-cloudy-light.png" className="w-3/2 max-w-72" alt="" />
+                <img src={updateIcon(weather.current)} className="w-3/2 max-w-72" alt="" />
             </div>
             <h3 id="city-name" className="text-xl font-medium">{weather.location?.name}</h3>
             <div id="info" className="flex gap-7 items-center">
@@ -44,7 +38,7 @@ function CurrentWeather() {
     ) : (
         <section id="current-weather" className="w-full flex flex-col grow items-center justify-center gap-3">
             <div id="weather-img">
-                <img src="./assets/weather-icons/01.sun-light.png" className="w-3/2 max-w-72" alt="" />
+                <img src="./assets/weather-icons/sun-light.png" className="w-3/2 max-w-72" alt="" />
             </div>
             <div className="animate-pulse w-60 h-14 bg-slate-300/40 rounded-lg"></div>
             <div className="animate-pulse flex gap-7 items-center">

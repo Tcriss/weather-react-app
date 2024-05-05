@@ -1,14 +1,21 @@
-import { SearchResultsI } from "../common/interfaces";
-import { changeCurrentCity } from "../services/weather.service";
+import useStore from "../hooks/store.hook";
+import { SearchResultsI, WeatherCodeI } from "../common/interfaces";
+import { changeCurrentCity, getCurrentWeather, getForecast } from "../services/weather.service";
+import { Weather } from "../common/types/weather.type";
+import { weatherCodes } from "../common/utils/codes.list";
 
 interface CardProps {
     city: SearchResultsI,
     isFav: boolean,
-    add: Function, 
-    remove: Function 
+    add: Function,
+    remove: Function
 }
 
 function Card({ city, isFav, add, remove }: CardProps) {
+    const updateCurrentWeather = useStore(state => state.setWeather);
+    const updateForecast = useStore(state => state.setForecast);
+    const updateBackground = useStore(state => state.setBackground);
+    const weather: Partial<Weather> = useStore(state => state.weather);
     const active: string = 'bg-yellow-400 text-slate-100';
 
     async function handleClick(): Promise<void> {
@@ -18,6 +25,19 @@ function Card({ city, isFav, add, remove }: CardProps) {
 
     async function changeCity(latLong: string): Promise<void> {
         await changeCurrentCity(latLong);
+
+        const weather = await getCurrentWeather();
+        const res = await getForecast();
+
+        updateCurrentWeather(weather.data);
+        updateForecast(res.data.forecast.forecastday);
+        getWeatherBackground();
+    }
+
+    function getWeatherBackground(): void {
+        const condition: WeatherCodeI | undefined = weatherCodes.find(code => code.code === weather.current?.condition.code);
+
+        updateBackground(condition ? condition.bg : 'bg-gradient-to-br from-sky-400 to-blue-400');
     }
 
     return (
@@ -30,8 +50,8 @@ function Card({ city, isFav, add, remove }: CardProps) {
                 </div>
             </div>
             <div id="actions" className="w-7 h-full flex justify-center items-center">
-                <button onClick={() => handleClick()} className={`${ isFav === false || active } w-full h-7 flex rounded-full justify-center items-center transition-all hover:bg-yellow-500 hover:text-white hover:scale-105 active:scale-95 active:shadow-lg`}>
-                    <i className={`fi ${ isFav ? 'fi-sr-star' : 'fi-br-star' } flex justify-center items-center`}></i>
+                <button onClick={() => handleClick()} className={`${isFav === false || active} w-full h-7 flex rounded-full justify-center items-center transition-all hover:bg-yellow-500 hover:text-white hover:scale-105 active:scale-95 active:shadow-lg`}>
+                    <i className={`fi ${isFav ? 'fi-sr-star' : 'fi-br-star'} flex justify-center items-center`}></i>
                 </button>
             </div>
         </article>
