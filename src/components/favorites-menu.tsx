@@ -39,7 +39,7 @@ function FavoritesMenu() {
             initial={{ opacity: 0, translateY: -30 }}
             animate={{ opacity: 1, translateY: 0 }}
             exit={{ opacity: 0, translateY: -30 }}
-            className="fixed inset-y-20 right-10 w-96 h-5/6 z-10 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] backdrop-blur-xl rounded-xl px-4 py-4 bg-slate-200/80 flex flex-col gap-3 overflow-y-scroll"
+            className="fixed inset-y-20 right-10 max-[480px]:right-4 w-96 max-[415px]:w-11/12 h-5/6 z-10 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] backdrop-blur-xl rounded-xl px-4 py-4 bg-slate-200/80 flex flex-col gap-3 overflow-y-scroll"
         >
             <h3 className="text-black/65 text-lg font-bold">Favorites cities</h3>
             {

@@ -42,11 +42,11 @@ function Card({ city, isFav, add, remove }: CardProps) {
 
     return (
         <article id="result" className="cursor-pointer w-full flex justify-between bg-white rounded-lg shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px] text-black px-2 py-2">
-            <div id="city" onClick={() => changeCity(`${city.lat},${city.lon}`)} className="grow max-w-72">
+            <div id="city" onClick={() => changeCity(`${city.lat},${city.lon}`)} className="grow shrink max-w-72">
                 <p className="font-semibold">{city.name}</p>
-                <div id="extra-info" className="flex gap-2">
-                    <p className="text-slate-400 text-sm text-ellipsis overflow-hidden text-nowrap">{city.region}</p>
-                    <p className="text-slate-400 text-sm text-ellipsis overflow-hidden text-nowrap">{city.country}</p>
+                <div id="extra-info" className="flex w-full shrink gap-2">
+                    <p className="text-slate-400 text-sm w-full text-ellipsis overflow-hidden text-nowrap">{city.region}</p>
+                    <p className="text-slate-400 text-sm w-full text-ellipsis overflow-hidden text-nowrap">{city.country}</p>
                 </div>
             </div>
             <div id="actions" className="w-7 h-full flex justify-center items-center">

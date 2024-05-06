@@ -9,7 +9,8 @@ export default {
     extend: {},
     fontFamily: {
       poppins: ['Poppins']
-    }
+    },
+    theme: {}
   },
   plugins: []
 }

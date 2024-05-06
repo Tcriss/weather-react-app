@@ -46,7 +46,7 @@ function Search() {
     }
 
     return (
-        <section id="search" className="relative w-96 h-22 flex flex-col gap-3 justify-center items-center py-4">
+        <section id="search" className="relative max-w-96 h-22 flex flex-col gap-3 justify-center items-center">
             <div className="relative w-full">
                 <input type="text" onChange={(e) => handleSearch(e.target.value)} id="simple-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5" placeholder="Search city name..." required />
                 <div id="input-icon" className="absolute flex justify-center items-center inset-y-1 inset-x-1 w-8 h-8 text-sm font-medium text-black rounded-lg">
@@ -60,7 +60,7 @@ function Search() {
                             initial={{ opacity: 0, translateY: -30 }}
                             animate={{ opacity: 1, translateY: 0 }}
                             exit={{ opacity: 0, translateY: -30 }}
-                            className="inset-y-20 w-96 z-10 fixed shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] backdrop-blur-xl rounded-xl px-4 py-4 bg-slate-200/80 flex flex-col gap-3 max-h-96 overflow-y-scroll"
+                            className="inset-y-20 max-w-96 max-[415px]:w-11/12 max-[480px]:left-4 xs:top-4 z-10 w-full fixed shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] backdrop-blur-xl rounded-xl px-4 py-4 bg-slate-200/80 flex flex-col gap-3 max-h-96 overflow-y-scroll"
                         >
                             {
                                 search.map((res, index) => {

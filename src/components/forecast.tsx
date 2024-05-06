@@ -14,16 +14,16 @@ function Forecast() {
     }
 
     return (
-        <section id="forecast" className="w-full flex justify-center items-center gap-4 py-3">
+        <section id="forecast" className="w-full flex justify-center items-center gap-4 py-3 max-[480px]:overflow-x-auto max-[430px]:justify-start max-[480px]:px-5">
             {
                 forecast.length > 0 ? forecast.map((fc, index) => {
                     return (
-                        <div key={index} id="card" className="w-36 rounded-xl shadow-xl flex flex-col items-center gap-2 px-3 py-3 text-white bg-white bg-opacity-15">
-                            <p id="day" className="uppercase">{fc.date}</p>
+                        <div key={index} id="card" className="max[430px]:w-32  w-36 rounded-xl shadow-xl flex flex-col items-center gap-2 px-3 py-3 text-white bg-white bg-opacity-15">
+                            <p id="day" className="uppercase text-ellipsis overflow-hidden whitespace-nowrap">{fc.date}</p>
                             <div id="icon">
-                                <img className="w-16" src={updateIcon(fc)} />
+                                <img className="max-[430px]:w-10 w-16" src={updateIcon(fc)} />
                             </div>
-                            <p id="temperature" className="text-xl font-normal">{settings.unit === Units.C ? fc.day.maxtemp_c + '/' + fc.day.mintemp_c + ' °C' : fc.day.maxtemp_f + '/' + fc.day.mintemp_f + ' °F'}</p>
+                            <p id="temperature" className="max-[430px]:text-base text-xl font-normal">{settings.unit === Units.C ? fc.day.maxtemp_c + '/' + fc.day.mintemp_c + ' °C' : fc.day.maxtemp_f + '/' + fc.day.mintemp_f + ' °F'}</p>
                             <p id="condition" className="text-xs font-semibold uppercase text-opacity-5 text-ellipsis overflow-hidden whitespace-nowrap">{fc.day.condition.text}</p>
                         </div>
                     )

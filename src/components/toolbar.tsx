@@ -6,8 +6,8 @@ import SettingsMenu from "./settings-menu";
 function Toolbar() {
 
     return (
-        <div id="toolbar" className="w-full flex justify-between px-10">
-            <div className="w-16"></div>
+        <nav id="toolbar" className="w-full flex justify-between gap-2 px-3 py-3 md:px-10 transition-all">
+            <div className="xs:w-0 md:w-16"></div>
             <div>
                 <Search/>
             </div>
@@ -19,7 +19,7 @@ function Toolbar() {
                     <SettingsMenu></SettingsMenu>
                 </Toggle>
             </div>
-        </div>
+        </nav>
     )
 }
 

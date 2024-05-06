@@ -16,12 +16,12 @@ function CurrentWeather() {
     return weather.current && weather.location ? (
         <section id="current-weather" className="w-full flex flex-col grow items-center justify-center gap-3">
             <div id="weather-img">
-                <img src={updateIcon(weather.current)} className="w-3/2 max-w-72" alt="" />
+                <img src={updateIcon(weather.current)} className="max-[480px]:w-48 w-3/2 max-w-72" alt="" />
             </div>
-            <h3 id="city-name" className="text-xl font-medium">{weather.location?.name}</h3>
+            <h3 id="city-name" className="xs:text-base text-xl font-medium">{weather.location?.name}</h3>
             <div id="info" className="flex gap-7 items-center">
-                <h3 id="temperature" className="text-7xl font-medium text-gray-200">{ settings.unit === Units.C ? weather.current?.temp_c + '°C' : weather.current?.temp_f + '°F'}</h3>
-                <div id="details" className="flex flex-col gap-3">
+                <h3 id="temperature" className="max-[430px]:text-5xl text-7xl font-medium text-white">{ settings.unit === Units.C ? weather.current?.temp_c + '°C' : weather.current?.temp_f + '°F'}</h3>
+                <div id="details" className="flex flex-col justify-between">
                     <div id="wind" className="flex gap-2">
                         <i className="fi fi-br-wind"></i>
                         <p>{ settings.measureUnit === MeasureUnits.K ? weather.current?.wind_kph + 'kph' : weather.current?.wind_mph + 'mph'}</p>
