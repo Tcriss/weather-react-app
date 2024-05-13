@@ -61,7 +61,7 @@ pnpm i
 Then create your .env file
 ``` dosini
 VITE_KEY = Your api key provided by Free Weather Api team
-VITE_URL = https://api.weatherapi.com/v1/ # The Free Weather API epi endpoint to make calls
+VITE_URL = https://api.weatherapi.com/v1/ # The Free Weather API url to access the api's endpoints
 ```
 
 ### ▶️ Execution
