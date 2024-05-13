@@ -1,6 +1,6 @@
 # React Weather App
 
-A simple but elegant weather web api made in react + typescript.
+A simple but elegant weather web app made with react + vite.
 
 ## 🚀 Features
 
