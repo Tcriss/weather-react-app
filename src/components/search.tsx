@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { getSearchResutls } from '../services/weather.service';
 import { SearchResultsI } from "../common/interfaces";
 import * as favoriteService from "../services/favorites.service";
+import { useDebouncedCallback } from "use-debounce";
 
 function Search() {
     const [search, setSearch] = useState<SearchResultsI[]>([]);
@@ -15,13 +16,16 @@ function Search() {
         getFavorites();
     }, []);
 
-    async function handleSearch(city: string): Promise<void> {
-        if (city === '') return;
+    const handleSearch = useDebouncedCallback((city: string) => {
+        getRes()
+        async function getRes(): Promise<void> {
+            if (city === '') return;
 
-        await getSearchResutls(city)
-            .then(res => setSearch(res.data))
-            .catch(err => toast.error(err.response.data.error.message));
-    }
+            await getSearchResutls(city)
+                .then(res => setSearch(res.data))
+                .catch(err => toast.error(err.response.data.error.message));
+        }
+    }, 300);
 
     async function getFavorites(): Promise<void> {
         const favs: SearchResultsI[] = await favoriteService.find();
