@@ -31,12 +31,14 @@ The weather services are provided by [Free Weather Api](https://www.weatherapi.c
 ### 📦 Dependencies
 
 - Axios
+- Clsx
 - Framer Motion
 - Free Weather Api
 - TailwindCSS
 - Vite
 - React Hook Form
 - React Hot Toast
+- Use-debounce
 - Zustand
 
 ##  Setup
